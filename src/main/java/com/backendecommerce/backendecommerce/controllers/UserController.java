@@ -55,19 +55,28 @@ public class UserController {
         Map<String,Object> response = new HashMap<>();
 		try {		
             User data = null;
-            if(obj.getId() == 0){
-                data = new User();;
-            }else{
-                data = service.findById(obj.getId());
+			List<User> valid = service.findByUsername(obj.getUsername());
+			List<User> validEmail = service.findByEmail(obj.getEmail());
+			if(valid.size()>0 || validEmail.size()>0){
+				response.put("data", "NONE");				
+			}else{
+				if(obj.getId() == 0){
+					data = new User();;
+				}else{
+					data = service.findById(obj.getId());
+				}	
+				data.setEmail(obj.getEmail());
+				data.setUsername(obj.getUsername());
+				data.setPassword(obj.getPassword());
+				data.setStatus(1);
+				data.setRole("USER");
+				service.save(data);
+				response.put("data", data);				
+			}
 
-            }
-            data.setEmail(obj.getEmail());
-            data.setUsername(obj.getUsername());
-            data.setPassword(obj.getPassword());
-            data.setStatus(1);
-            data.setRole("USER");
-            service.save(data);
-            response.put("data", data);			
+
+
+
 		}catch(NumberFormatException e) {
 			System.out.println("Error Number Format "+e.getMessage());
 		}
