@@ -8,7 +8,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="api/users")
+@Table(name="users")
 public class User {
   
 	@Id
@@ -21,6 +21,10 @@ public class User {
     private String email;
 
     private String password;
+
+    private Integer status;  
+    
+    private String role;    
 
     public Long getId() {
         return id;
@@ -52,6 +56,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
 
